@@ -79,7 +79,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "prepack": "npm run build",
-    "test": "npm run build && node --test test/",
+    "test": "npm run build && node --test test/*.test.js",
     "demo": "node scripts/hero.mjs"
   },
   "keywords": [
