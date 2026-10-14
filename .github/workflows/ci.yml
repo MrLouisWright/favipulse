@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: { node: [18, 20, 22] }
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { persist-credentials: false }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: '${{ matrix.node }}' }
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - name: Verify ESM import and CJS require
+        run: |
+          node --input-type=module -e "import { favipulse, icon } from 'favipulse'; if (!favipulse || !icon('a').shapes.length) process.exit(1)"
+          node -e "if (!require('favipulse').toSVG(require('favipulse').icon('a')).startsWith('<svg')) process.exit(1)"
+      - name: Dogfood the CLI
+        run: node bin/favipulse.js generate --seed favipulse --out /tmp/favicons
+      - run: npm pack --dry-run
