@@ -4,7 +4,7 @@
 [![CI](https://github.com/MrLouisWright/favipulse/actions/workflows/ci.yml/badge.svg)](https://github.com/MrLouisWright/favipulse/actions/workflows/ci.yml)
 [![Node](https://img.shields.io/node/v/favipulse.svg)](https://nodejs.org)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-![size](https://img.shields.io/badge/min%2Bgzip-2.9%20KB-success)
+![size](https://img.shields.io/badge/min%2Bgzip-3.1%20KB-success)
 ![zero deps](https://img.shields.io/badge/dependencies-0-success)
 ![types](https://img.shields.io/badge/types-included-blue)
 
@@ -16,7 +16,7 @@
 
 `favipulse` draws a **deterministic generative favicon** from any seed (with an optional **self-drawing** animation), shows **badges**, a **progress ring** for builds and uploads and a **pulse** when something needs attention, and gives **dev, staging and prod their own icon** so you never ship from the wrong tab again. A CLI and Vite / Next.js helpers generate static `favicon.svg`, `favicon.ico`, PNG sizes and a manifest snippet per environment.
 
-Under 3 KB min+gzip, zero dependencies, TypeScript types, ESM + CJS, SSR-safe, works without canvas (pure SVG) and respects `prefers-reduced-motion`. A modern, maintained replacement for [favico.js](https://github.com/ejci/favico.js) (~43k downloads/week, last release 2015) and [tinycon](https://github.com/tommoor/tinycon) (~11k/week, last release 2017).
+Under 3.1 KB min+gzip, zero dependencies, TypeScript types, ESM + CJS, SSR-safe, works without canvas (pure SVG) and respects `prefers-reduced-motion`. A modern, maintained replacement for [favico.js](https://github.com/ejci/favico.js) (~43k downloads/week, last release 2015) and [tinycon](https://github.com/tommoor/tinycon) (~11k/week, last release 2017).
 
 ## Install
 
@@ -201,6 +201,23 @@ Tag `vX.Y.Z` and publish a GitHub release: `release.yml` tests, then publishes t
 ## Support
 
 If this project is useful to you, you can support its development with a donation: [Buy me a coffee](https://donate.stripe.com/aFa00lek3cvX4Ds2Fk9EI0b). It helps keep these tools maintained, documented and free for everyone.
+
+## Optional credit link
+
+MIT needs no attribution. If you want a small backlink in the page:
+
+```js
+favipulse({ seed: 'acme', credit: true });
+// or: creditTarget: '#footer' / an HTMLElement
+```
+
+Style it yourself (no inline styles are set):
+
+```css
+.favipulse-credit { font-size: 0.75rem; opacity: 0.65; }
+```
+
+`destroy()` removes the link. Off by default; no network calls or tracking.
 
 ## Credit (optional)
 

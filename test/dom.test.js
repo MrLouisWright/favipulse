@@ -160,3 +160,31 @@ test('SSR: no document → no-op controller that still renders SVG', async () =>
   await f.draw();
   f.destroy();
 });
+
+test('credit defaults off and mounts when enabled; destroy removes it', () => {
+  const w = dom();
+  const f = favipulse({ document: w.document, seed: 'a' });
+  assert.equal(w.document.querySelector('.favipulse-credit'), null);
+  f.set({ credit: true });
+  const a = w.document.querySelector('a.favipulse-credit');
+  assert.ok(a);
+  assert.equal(a.getAttribute('href'), 'https://louiswright.co.uk');
+  assert.equal(a.getAttribute('rel'), 'noopener');
+  assert.equal(a.textContent, 'Built with favipulse');
+  assert.equal(a.getAttribute('style'), null);
+  assert.equal(a.parentNode, w.document.body);
+  f.destroy();
+  assert.equal(w.document.querySelector('.favipulse-credit'), null);
+});
+
+test('creditTarget appends into a chosen container', () => {
+  const w = dom();
+  const box = w.document.createElement('div');
+  box.id = 'credit-box';
+  w.document.body.appendChild(box);
+  const f = favipulse({ document: w.document, seed: 'a', credit: true, creditTarget: '#credit-box' });
+  assert.equal(box.querySelector('.favipulse-credit').parentNode, box);
+  f.set({ credit: false });
+  assert.equal(box.querySelector('.favipulse-credit'), null);
+  f.destroy();
+});

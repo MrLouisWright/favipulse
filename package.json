@@ -1,6 +1,6 @@
 {
   "name": "favipulse",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tiny (<3 KB gz), zero-dependency, typed favicon library: deterministic generative/identicon favicons from a seed with self-drawing animation, badges, progress rings and pulse, plus per-environment (dev/staging/prod) icons. CLI generates svg/ico/png sets + manifest. Vite & Next.js helpers. Modern replacement for favico.js and tinycon.",
   "type": "module",
   "main": "./dist/index.cjs",

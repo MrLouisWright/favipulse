@@ -21,6 +21,14 @@ export interface FavipulseOptions extends IconOptions, Omit<Overlay, 'pulse' | '
   fps?: number;
   /** Document to operate on (tests, iframes). Default: global `document`. */
   document?: Document;
+  /**
+   * When true, append a small unobtrusive credit link ("Built with favipulse").
+   * Off by default — MIT needs no attribution. No network calls or tracking.
+   * The link uses class `favipulse-credit` (no inline styles; CSP-safe).
+   */
+  credit?: boolean;
+  /** Element or CSS selector to append the credit link into. Default: `document.body`. */
+  creditTarget?: HTMLElement | string;
 }
 
 export interface Favipulse {
@@ -67,6 +75,20 @@ export const favipulse = (opts: FavipulseOptions = {}): Favipulse => {
   let o: FavipulseOptions = {}, ic: Icon, svg = '', timer: any = 0, pulseOn = false, phase: number | null = null, reveal = 1, token = 0;
   let stripe: string | undefined;
   let link: HTMLLinkElement | null = null, prev: string | null = null, owned = false;
+  let creditEl: HTMLAnchorElement | null = null;
+  const syncCredit = () => {
+    if (!d) return;
+    if (!o.credit) { creditEl?.remove(); creditEl = null; return; }
+    if (!creditEl) {
+      creditEl = d.createElement('a');
+      creditEl.className = 'favipulse-credit';
+      creditEl.href = 'https://louiswright.co.uk';
+      creditEl.rel = 'noopener';
+      creditEl.textContent = 'Built with favipulse';
+    }
+    const t = o.creditTarget, target = !t ? d.body : typeof t == 'string' ? d.querySelector(t) : t;
+    if (target && creditEl.parentNode != target) target.appendChild(creditEl);
+  };
   if (d) {
     link = d.querySelector<HTMLLinkElement>('link[rel~="icon"]');
     if (link) prev = link.getAttribute('href'), link.removeAttribute('sizes');
@@ -110,10 +132,11 @@ export const favipulse = (opts: FavipulseOptions = {}): Favipulse => {
         const id = setInterval(() => { reveal = Math.min(1, (Date.now() - t0) / ms); render(); if (reveal >= 1) { clearInterval(id); fin(); } }, 1000 / (o.fps || 12));
       });
     },
-    set(n) { o = { ...o, ...n }; build(); render(); return api; },
+    set(n) { o = { ...o, ...n }; build(); render(); syncCredit(); return api; },
     reset() { o.badge = o.progress = null; pulseOn = false; loop(); return api; },
     destroy() {
       clearInterval(timer); pulseOn = false;
+      creditEl?.remove(); creditEl = null;
       if (!link) return;
       if (owned) link.remove(); else if (prev != null) link.href = prev;
       link = null;

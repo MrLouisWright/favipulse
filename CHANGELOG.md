@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 (2026-10-15)
+
+### Added
+- Optional `credit` / `creditTarget` on `favipulse()`: when `credit: true`, appends a small CSP-safe link (`class="favipulse-credit"`, no inline styles) to `document.body` or a chosen container. Off by default; no network or tracking. `destroy()` removes it.
+
+
 ## 1.0.0 (2026-10-14)
 
 First release.

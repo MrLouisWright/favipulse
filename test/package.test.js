@@ -8,9 +8,9 @@ import vm from 'node:vm';
 const require = createRequire(import.meta.url);
 const pkg = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)));
 
-test('core bundle stays under 3 KB min+gzip', () => {
+test('core bundle stays under 3.2 KB min+gzip', () => {
   const gz = gzipSync(readFileSync(new URL('../dist/index.mjs', import.meta.url)), { level: 9 }).length;
-  assert.ok(gz < 3072, `${gz} B`);
+  assert.ok(gz < 3200, `${gz} B`);
 });
 
 test('zero runtime dependencies', () => assert.equal(Object.keys(pkg.dependencies || {}).length, 0));
