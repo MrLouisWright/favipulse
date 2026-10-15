@@ -2,11 +2,11 @@
 
 [![npm](https://img.shields.io/npm/v/favipulse.svg)](https://www.npmjs.com/package/favipulse)
 [![CI](https://github.com/MrLouisWright/favipulse/actions/workflows/ci.yml/badge.svg)](https://github.com/MrLouisWright/favipulse/actions/workflows/ci.yml)
+[![Node](https://img.shields.io/node/v/favipulse.svg)](https://nodejs.org)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 ![size](https://img.shields.io/badge/min%2Bgzip-2.9%20KB-success)
 ![zero deps](https://img.shields.io/badge/dependencies-0-success)
 ![types](https://img.shields.io/badge/types-included-blue)
-[![Node](https://img.shields.io/node/v/favipulse.svg)](https://nodejs.org)
 
 > Favicons that say something: who, where, and what's happening.
 
